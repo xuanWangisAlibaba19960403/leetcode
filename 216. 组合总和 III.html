@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+        * @param {number} k
+        * @param {number} n
+        * @return {number[][]}
+        */
+        var combinationSum3 = function (k, n) {
+            const ret = [];
+            if (k === 0) {
+                return ret;
+            }
+            dfs(1, 10, n, k, [], ret);
+            return ret;
+        };
+
+        var dfs = function (start, end, target, bit, path, ret) {
+            if (bit === 0) {
+                if (target === 0) {
+                    ret.push([...path]);
+                }
+                return;
+            }
+            for (let i = start; i < end; i++) {
+                if (target - i < 0) {
+                    break;
+                }
+                path.push(i);
+                dfs(i + 1, end, target - i, bit - 1, path, ret);
+                path.pop();
+            }
+        }
+
+        // 输入: k = 3, n = 7
+        // 输出: [[1, 2, 4]]
+        function combinationSum3(k, n) {
+            const ret = [];
+            dfs(ret, [], k, 1, n);
+            return ret;
+        }
+
+        function dfs(ret, path, k, start, target) {
+            //终止条件，如果满足这个条件，再往下找也没什么意义了
+            if (path.length === k || target <= 0) {
+                //如果找到一组合适的就把他加入到集合list中
+                if (path.length === k && n == 0) {
+                    ret.push([...path]);
+                }
+                return;
+            }
+            for (let i = start; i <= 9; i++) {
+                //选择当前值
+                path.add(i);
+                //递归
+                dfs(ret, path, k, i + 1, target - i);
+                //撤销选择
+                path.pop();
+            }
+        }
+
+        console.log(combinationSum3(3, 7));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var palindromePairs = function (words) {
+      let map = new Map();
+      let n = words.length;
+      let set = new Set();
+      let res = [];
+      words.forEach((t, i) => {
+        let key = [...t].reverse().join('');
+        map.set(key, i);
+      })
+      for (let i = 0; i < n; i++) { // 循环数组
+        let word = words[i];
+        for (let j = 0; j <= word.length; j++) {  // 循环字符串
+          let left = word.slice(0, j);
+          let right = word.slice(j);
+          if (isPalindrom(right) && map.has(left) && map.get(left) !== i) {
+            let w = [i, map.get(left)];
+            let key = w.join(',');
+            if (!set.has(key)) {
+              res.push(w);
+              set.add(key);
+            }
+          }
+          if (isPalindrom(left) && map.has(right) && map.get(right) !== i) {
+            let w = [map.get(right), i];
+            let key = w.join(',');
+            if (!set.has(key)) {
+              res.push(w);
+              set.add(key);
+            }
+          }
+        }
+      }
+      return res;
+    };
+    /* 校验是否是回文 */
+    function isPalindrom(str) {
+      let m = str.length - 1
+      for (let i = 0; i < m / 2; i++) {
+        if (str[i] !== str[m - i]) return false
+      }
+      return true
+    }
+
+    palindromePairs(["abcb", "a"])
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * @param {number[][]} rooms
+    * @return {boolean}
+    */
+    // var canVisitAllRooms = function (rooms) {
+    //   // 新建visited数组，visited[i]表示i号房间能否去到，值为true表示去得到，为false表示去不到
+    //   const visited = new Array(rooms.length).fill(false);
+    //   console.log(visited);
+    //   // 从0号房间开始，将visited[0]设为true
+    //   visited[0] = true;
+    //   // 设置BFS的队列初始值为rooms[0]，是0号房间的持有的钥匙
+    //   const queue = rooms[0];
+    //   while (queue.length > 0) {
+    //     // 取出队列的第一个房间，为下一个打算去的房间
+    //     const room = queue.shift();
+    //     console.log(room);
+    //     // 判断这个房间是否已经去过，如果去过的话直接跳过，没去过的话，将里面的钥匙添加到队列里
+    //     if (!visited[room]) {
+    //       visited[room] = true;
+    //       queue.push(...rooms[room]);
+    //     }
+    //   }
+    //   // 判断是不是所有房间都能进入
+    //   return visited.every(v => v === true);
+    // };
+
+    var canVisitAllRooms = function (rooms) {
+      // 新建visited数组，visited[i]表示i号房间能否去到，值为true表示去得到，为false表示去不到
+      const visited = new Array(rooms.length).fill(false);
+      // 从0号房间开始dfs
+      dfs(0, visited, rooms);
+      // 判断是不是所有房间都能进入
+      return visited.every(v => v === true);
+    }
+
+    var dfs = function (n, visited, rooms) {
+      // 如果房间已经去过，直接return
+      if (visited[n]) {
+        return;
+      }
+      console.log(n);
+      visited[n] = true;
+      // 对房间里的钥匙挨个进行dfs
+      for (let key of rooms[n]) {
+        console.log('key', key)
+        dfs(key, visited, rooms);
+      }
+    }
+    // console.log(canVisitAllRooms([[1], [2], [3], []]));
+    console.log(canVisitAllRooms([[1, 3], [3, 0, 1], [2], [0]]));
+  </script>
+</body>
+
+</html>

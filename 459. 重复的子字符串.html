@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+        * @param {string} s
+        * @return {boolean}
+        */
+        var repeatedSubstringPattern = function (s) {
+            const len = s.length;
+            for (let i = 1; i < len; i++) {
+                const char = s.slice(0, i);
+                const charLen = char.length;
+                let flag = true;
+                for (let j = charLen; j < len; j += charLen) {
+                    const tempChar = s.slice(j, j + charLen);
+                    if (tempChar !== char) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        console.log(repeatedSubstringPattern('abab'));
+    </script>
+</body>
+
+</html>

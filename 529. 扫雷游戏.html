@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+        * @param {character[][]} board
+        * @param {number[]} click
+        * @return {character[][]}
+        */
+        // var board = [['E', 'E', 'E', 'E', 'E'],
+        // ['E', 'E', 'M', 'E', 'E'],
+        // ['E', 'E', 'E', 'E', 'E'],
+        // ['E', 'E', 'E', 'E', 'E']]
+
+        // var click = [3, 0];
+
+        // class UpdateBoard {
+        //     constructor(board, click) {
+        //         this.dx = [-1, -1, 0, 1, 1, 1, 0, -1]; // 相邻位置
+        //         this.dy = [0, 1, 1, 1, 0, - 1, -1, -1];
+        //         this.board = board;
+        //         this.click = click;
+        //     }
+
+
+        //     entry(board, [x, y]) {
+        //         this.dfs(board, x, y);
+        //         return board;
+        //     }
+
+        //     dfs(board, x, y) {
+        //         let r = board.length;
+        //         let c = board[0].length;
+        //         if (x < 0 || x >= r || y < 0 || y >= c) {
+        //             return;
+        //         }
+        //         if (board[x][y] == 'M') { // 注意不要用else，否则会递归修改掉已经是数字的位置
+        //             board[x][y] = 'X';
+        //         } else if (board[x][y] === 'E') { // 如果当前为E，才进行判断是否要递归相邻结点
+        //             board[x][y] = 'B';
+        //             let count = this.judge(board, x, y);
+        //             if (count == 0) { // 如果为0，则进行递归
+        //                 for (let i = 0; i < 8; i++) {
+        //                     this.dfs(board, x + this.dx[i], y + this.dy[i]);
+        //                 }
+        //             } else { // 如果不为0，则更新当前结点的值为地雷数量
+        //                 board[x][y] = count;
+        //             }
+        //         }
+        //     }
+
+        //     // 获取当前借点相邻的地雷数量
+        //     judge(board, x, y) {
+        //         let r = board.length;
+        //         let c = board[0].length;
+        //         let count = 0;
+        //         for (let i = 0; i < 8; i++) {
+        //             let newX = x + this.dx[i];
+        //             let newY = y + this.dy[i];
+        //             if (newX < 0 || newX >= r || newY < 0 || newY >= c) {
+        //                 continue;
+        //             }
+        //             if (board[newX][newY] === 'M') {
+        //                 count++;
+        //             }
+        //         }
+        //         return count;
+        //     }
+
+        // }
+        // UpdateBoard.prototype.entry(board, click)
+        // console.log(new UpdateBoard(board, click).entry(board, click));
+
+        // var updateBoard = function (board, [x, y]) {
+        //     var dx = [-1, -1, 0, 1, 1, 1, 0, -1]; // 相邻位置
+        //     var dy = [0, 1, 1, 1, 0, - 1, -1, -1];
+        //     dfs(board, x, y, dx, dy);
+        //     return board;
+        // }
+
+        // var dfs = function (board, x, y, dx, dy) {
+        //     let r = board.length;
+        //     let c = board[0].length;
+        //     if (x < 0 || x >= r || y < 0 || y >= c) {
+        //         return;
+        //     }
+        //     if (board[x][y] == 'M') { // 注意不要用else，否则会递归修改掉已经是数字的位置
+        //         board[x][y] = 'X';
+        //     } else if (board[x][y] === 'E') { // 如果当前为E，才进行判断是否要递归相邻结点
+        //         board[x][y] = 'B';
+        //         let count = judge(board, x, y, dx, dy);
+        //         if (count == 0) { // 如果为0，则进行递归
+        //             for (let i = 0; i < 8; i++) {
+        //                 dfs(board, x + dx[i], y + dy[i], dx, dy);
+        //             }
+        //         } else { // 如果不为0，则更新当前结点的值为地雷数量
+        //             board[x][y] = count;
+        //         }
+        //     }
+        // }
+
+        // // 获取当前借点相邻的地雷数量
+        // var judge = function (board, x, y, dx, dy) {
+        //     console.log(dx, dy);
+        //     let r = board.length;
+        //     let c = board[0].length;
+        //     let count = 0;
+        //     for (let i = 0; i < 8; i++) {
+        //         let newX = x + dx[i];
+        //         let newY = y + dy[i];
+        //         if (newX < 0 || newX >= r || newY < 0 || newY >= c) {
+        //             continue;
+        //         }
+        //         if (board[newX][newY] === 'M') {
+        //             count++;
+        //         }
+        //     }
+        //     return count;
+        // }
+
+        // console.log(updateBoard(board, click));
+
+        var updateBoard = function (board, click) {
+            let dirX = [0, 1, 0, -1, 1, 1, -1, -1],
+                dirY = [1, 0, -1, 0, 1, -1, 1, -1],
+                m = board.length,
+                n = m ? board[0].length : 0,
+                [x, y] = click;
+            if (board[x][y] === 'M') {
+                // 传入位置为 M，将该位置改成 X 返回矩阵
+                board[x][y] = 'X';
+            } else {
+                bfs(board, x, y);
+            }
+            return board;
+        }
+        
+        function bfs(board, sx, sy) {
+            // 相邻M数量
+            let queue = [],
+                vis = Array(m);
+            for (let i = 0; i < m; i++) {
+                vis[i] = Array(n).fill(false);
+            }
+            queue.push([sx, sy]);
+            // 标记坐标是否已处理或者一存放到待处理数组中
+            vis[sx][sy] = true;
+            while (queue.length) {
+                let item = queue.shift(),
+                    num = 0,
+                    x = item[0],
+                    y = item[1];
+                for (let i = 0; i < 8; ++i) {
+                    let tx = x + dirX[i],
+                        ty = y + dirY[i];
+                    // 枚举的相邻左边越界
+                    if (tx < 0 || tx >= m || ty < 0 || ty >= n) continue;
+                    // 遇到相邻M计数+1
+                    if (board[tx][ty] === 'M') ++num;
+                }
+                if (num > 0) {
+                    // 传入点存在相邻M,统计与其邻的 M 的个数，将该位置改成统计的个数
+                    board[x][y] = String(num);
+                } else {
+                    // 不存在相邻M，则遍历查询相邻点
+                    board[x][y] = 'B';
+                    // 枚举相邻点
+                    for (let i = 0; i < 8; ++i) {
+                        let tx = x + dirX[i],
+                            ty = y + dirY[i];
+                        // 枚举的相邻左边越界
+                        if (tx < 0 || tx >= m || ty < 0 || ty >= n || board[tx][ty] != 'E' || vis[tx][ty]) continue;
+                        // 相邻的坐标为'E',推到数组中待处理
+                        queue.push([tx, ty]);
+                        vis[tx][ty] = true;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * Definition for a binary tree node.
+    * function TreeNode(val) {
+    *     this.val = val;
+    *     this.left = this.right = null;
+    * }
+    */
+    function TreeNode(val) {
+      this.val = val;
+      this.left = this.right = null;
+    }
+    var root = {
+      val: 3,
+      left: {
+        val: 9,
+        left: null,
+        right: null
+      },
+      right: {
+        val: 20,
+        left: {
+          val: 15,
+          left: null,
+          right: null
+        },
+        right: {
+          val: 7,
+          left: null,
+          right: null
+        }
+      }
+    }
+    /**
+     * @param {TreeNode} root
+     * @return {number[]}
+     */
+    // var averageOfLevels = function (root) {
+    //   const ret = [];
+    //   if (root === null) {
+    //     return ret;
+    //   }
+    //   const queue = [root];
+    //   while (queue.length > 0) {
+    //     const len = queue.length;
+    //     let count = 0;
+    //     for (let i = 0; i < len; i++) {
+    //       const { val, left, right } = queue.shift();
+    //       console.log(val, left, right);
+    //       count += val;
+    //       if (left) {
+    //         queue.push(left);
+    //       }
+    //       if (right) {
+    //         queue.push(right);
+    //       }
+    //     }
+    //     ret.push(count / len);
+    //   }
+    //   console.log(ret);
+    // };
+
+    var averageOfLevels = function (root) {
+      const ret = [];
+      if (root === null) {
+        return ret;
+      }
+      const counts = [];
+      const sums = [];
+      dfs(root, 0, counts, sums);
+      for (let i = 0; i < sums.length; i++) {
+        ret.push(sums[i] / counts[i]);
+      }
+      return ret;
+    };
+
+    var dfs = function (root, level, counts, sums) {
+      if (root === null) {
+        return;
+      }
+      if (level < sums.length) {
+        sums[level] += root.val;
+        counts[level] += 1;
+      } else {
+        sums[level] = root.val;
+        counts[level] = 1;
+      }
+      dfs(root.left, level + 1, counts, sums);
+      dfs(root.right, level + 1, counts, sums);
+    }
+
+    averageOfLevels(root);
+  </script>
+</body>
+
+</html>

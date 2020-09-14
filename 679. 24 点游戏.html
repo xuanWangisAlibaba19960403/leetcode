@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * @param {number[]} nums
+         * @return {boolean}
+         */
+        var judgePoint24 = function (nums) {
+            console.log(nums);
+            if (nums.length == 1)
+                return Math.abs(nums[0] - 24) < 1e-6;
+            for (let i = 0; i < nums.length; i++)
+                for (let j = i + 1; j < nums.length; j++) {
+                    let rest = nums.filter((value, index) => index !== i && index !== j);
+                    if (judgePoint24([nums[i] + nums[j], ...rest]) ||
+                        judgePoint24([nums[i] * nums[j], ...rest]) ||
+                        judgePoint24([nums[i] - nums[j], ...rest]) ||
+                        judgePoint24([nums[j] - nums[i], ...rest]) ||
+                        judgePoint24([nums[i] / nums[j], ...rest]) ||
+                        judgePoint24([nums[j] / nums[i], ...rest]))
+                        return true;
+                }
+            return false;
+        }
+
+
+        var nums = [4, 1, 8, 7];
+
+        judgePoint24(nums);
+    </script>
+</body>
+
+</html>

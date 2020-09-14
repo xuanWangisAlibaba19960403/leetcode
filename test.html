@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * @param {string[]} words
+    * @return {number[][]}
+    */
+    var palindromePairs = function (words) {
+      const len = words.length;
+      const ans = [];
+      const cache = new Map();
+      for (let i = 0; i < len; i++) {
+        for (let j = 0; j < len; j++) {
+          if (i === j) {
+            continue;
+          }
+          const chars = words[i] + words[j];
+          if (cache.has(chars)) {
+            cache.get(chars) && ans.push([i, j]);
+          } else if (matchPalindrome(chars)) {
+            cache.set(chars, true)
+            ans.push([i, j]);
+            // i j 确定 反向判断j i
+            const chars1 = words[j] + words[i];
+            if (chars === chars1) {
+              cache.set(chars1, true);
+            } else {
+              cache.set(chars1, matchPalindrome(chars1));
+            }
+          }
+        }
+      }
+      return ans;
+    };
+
+    /**
+    * @param {string} word
+    * @return {boolean}
+    */
+    var matchPalindrome = function (word) {
+      let left = 0, right = word.length - 1;
+      while (left < right) {
+        console.log(word[left], word[right]);
+        if (word[left] !== word[right]) {
+          return false;
+        }
+        left++;
+        right--;
+      }
+      return true;
+    }
+  </script>
+</body>
+
+</html>

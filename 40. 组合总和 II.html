@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * @param {number[]} candidates
+    * @param {number} target
+    * @return {number[][]}
+    */
+    var combinationSum2 = function (candidates, target) {
+      const len = candidates.length;
+      const ret = [];
+      if (len === 0) {
+        return ret;
+      }
+      candidates.sort((a, b) => a - b);
+      helper(0, target, [], candidates, len, ret);
+      return ret;
+    };
+
+    var helper = function (start, target, path, candidates, len, ret) {
+      if (target === 0) {
+        ret.push(path.slice());
+        return;
+      }
+      for (let i = start; i < len; i++) {
+        const num = candidates[i];
+        if (target - num < 0) { // sort之后 target < num 那么target必然小于num之后的数
+          break;
+        }
+        if (i > start && num === candidates[i - 1]) { // 此时结果为重复值
+          continue;
+        }
+        path.push(num);
+        helper(i + 1, target - num, path, candidates, len, ret);
+        path.pop();
+      }
+    }
+
+    /**
+    * @param candidates 候选数组
+    * @param len        冗余变量
+    * @param begin      从候选数组的 begin 位置开始搜索
+    * @param target     表示剩余，这个值一开始等于 target，基于题目中说明的"所有数字（包括目标数）都是正整数"这个条件
+    * @param path       从根结点到叶子结点的路径
+    * @param res
+    */
+    // var dfs = function (candidates, len, begin, target, path, res) {
+    //   if (target === 0) {
+    //     res.push(path.slice());
+    //     return;
+    //   }
+    //   for (let i = begin; i < len; i++) {
+    //     // 大剪枝：减去 candidates[i] 小于 0，减去后面的 candidates[i + 1]、candidates[i + 2] 肯定也小于 0，因此用 break
+    //     if (target - candidates[i] < 0) {
+    //       break;
+    //     }
+
+    //     // 小剪枝：同一层相同数值的结点，从第 2 个开始，候选数更少，结果一定发生重复，因此跳过，用 continue
+    //     if (i > begin && candidates[i] === candidates[i - 1]) {
+    //       continue;
+    //     }
+
+    //     path.push(candidates[i]);
+    //     // 调试语句 ①
+    //     // System.out.println("递归之前 => " + path + "，剩余 = " + (target - candidates[i]));
+
+    //     // 因为元素不可以重复使用，这里递归传递下去的是 i + 1 而不是 i
+    //     dfs(candidates, len, i + 1, target - candidates[i], path, res);
+
+    //     path.pop();
+    //   }
+    // }
+
+
+    var combinationSum2 = function (candidates, target) {
+      const ret = [];
+      const len = candidates.length;
+      if (len === 0) {
+        return ret;
+      }
+      candidates.sort((a, b) => a - b);
+      dfs(target, 0, len, [], ret, candidates);
+      return ret;
+    };
+
+    var dfs = function (target, begin, end, path, ret, store) {
+      if (target === 0) {
+        ret.push([...path]);
+        return;
+      }
+      for (let i = begin; i < end; i++) {
+        // v 差值
+        const v = target - store[i];
+        if (v < 0) {
+          break;
+        }
+
+        if (i > begin && store[i] === store[i - 1]) {
+          continue;
+        }
+        path.push(store[i]);
+        dfs(v, i + 1, end, path, ret, store);
+        path.pop();
+      }
+    }
+
+    var candidates = [10, 1, 2, 7, 6, 1, 5],
+      target = 8;
+
+    console.log(combinationSum2(candidates, target));
+  </script>
+</body>
+
+</html>

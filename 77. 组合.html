@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+        * @param {number} n
+        * @param {number} k
+        * @return {number[][]}
+        */
+        // var combine = function (n, k) {
+        //     const ret = [];
+        //     for (let i = 1; i <= n; i++) {
+        //         helper([i], i + 1, n, k, ret)
+        //     }
+        //     return ret;
+        // };
+
+        // var helper = function (cur, left, n, k, ret) {
+        //     if (cur.length === k) {
+        //         ret.push(cur);
+        //     }
+        //     const t = [...cur];
+        //     for (let i = left; i <= n; i++) {
+        //         helper(t.concat(i), i + 1, n, k, ret);
+        //     }
+        // }
+
+        // var combine = function (n, k) {
+        //     const ret = [];
+        //     helper(1, n, k, [], ret);
+        //     console.log(ret);
+        //     return ret;
+        // };
+
+        // var helper = function (start, end, k, path, ret) {
+        //     // 1 结束条件
+        //     if (path.length === k) {
+        //         ret.push([...path]);
+        //         return;
+        //     }
+        //     // 2处理当前层
+        //     for (let i = start; i <= end; i++) {
+        //         path.push(i);
+        //         // 3处理下一层
+        //         helper(i + 1, end, k, path, ret)
+        //         // 4清理当前数据
+        //         path.pop();
+        //     }
+        // }
+
+        var combine = function (n, k) {
+            let out = comb(k, n);
+            console.log(out);
+            return out;
+        };
+
+
+        function comb(max, n, out = [], curr = [], start = 1) {
+            if (curr.length === max) {
+                out.push(curr);
+                return [];
+            }
+            while (start <= n) {
+                comb(max, n, out, [...curr, start], ++start);
+            }
+            return out;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        var combine = function (n, k) {
+            return dfs(1, n, k, [], []);
+        };
+
+        var dfs = function (start, end, k, path, ret) {
+            if (k === 0) {
+                ret.push([...path]);
+                return;
+            }
+            for (let i = start; i <= end; i++) {
+                path.push(i);
+                dfs(i + 1, end, k - 1, path, ret);
+                path.pop();
+            }
+            return ret;
+        }
+
+        console.log(combine(4, 2));
+    </script>
+</body>
+
+</html>

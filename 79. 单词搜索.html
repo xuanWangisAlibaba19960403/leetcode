@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * @param {character[][]} board
+    * @param {string} word
+    * @return {boolean}
+    */
+    // var exist = function (board, word) {
+    //   const rows = board.length;
+    //   const cols = board[0].length;
+    //   const visited = new Array(rows);    // 二维矩阵used
+    //   for (let i = 0; i < rows; i++) {
+    //     visited[i] = new Array(cols);
+    //   }
+    //   for (let i = 0; i < rows; i++) {
+    //     for (let j = 0; j < cols; j++) {
+    //       if (board[i][j] === word[0] && dfs(i, j, m, n, 0, word, used, board)) {
+    //         return true;
+    //       }
+    //     }
+    //   }
+    //   return false;
+    // };
+
+    // var dfs = function (x, y, rows, cols, len, visited, board) {
+    //   if (len > word.length - 1) {
+    //     return false;
+    //   }
+    //   if (x < 0 || x >= rows || y < 0 || y >= cols) {
+    //     return false;
+    //   }
+    //   if (used[x][y] || board[x][y] !== word[i]) {
+    //     return false;
+    //   }
+    //   used[x][y] = true;
+    //   const canFindRest =
+    //     canFind(x + 1, y, m, n, i + 1, word, used, board) ||
+    //     canFind(x - 1, y, m, n, i + 1, word, used, board) ||
+    //     canFind(x, y + 1, m, n, i + 1, word, used, board) ||
+    //     canFind(x, y - 1, m, n, i + 1, word, used, board);
+    //   if (canFindRest) {
+    //     return true;
+    //   }
+    //   used[x][y] = false;
+    // }
+
+    // const exist = function (board, word) {
+    //   const m = board.length;
+    //   const n = board[0].length;
+    //   const used = new Array(m);    // 二维矩阵used
+    //   for (let i = 0; i < m; i++) {
+    //     used[i] = new Array(n);
+    //   }
+    //   console.log(used);
+
+    //   for (let i = 0; i < m; i++) {
+    //     for (let j = 0; j < n; j++) {
+    //       if (board[i][j] == word[0] &&
+    //         canFind(i, j, m, n, 0, word, used, board)) { // 找到dfs的起点
+    //         return true; // 找到起点，且dfs的结果也true，则找到了目标路径
+    //       }
+    //     }
+    //   }
+    //   return false; // 怎么样都没有返回true，则返回false
+    // };
+
+    // // 判断当前点是否是目标路径上的点
+    // var canFind = function (row, col, m, n, i, word, used, board) { // row col是当前点的坐标，i是当前考察的字符索引
+    //   if (i > word.length - 1) {       // 递归的出口
+    //     return true;
+    //   }
+    //   if (row < 0 || row >= m || col < 0 || col >= n) { // 当前点要存在
+    //     return false;
+    //   }
+
+    //   if (used[row][col] || board[row][col] !== word[i]) { // 当前的点已经走过，或当前点就不是目标点
+    //     return false;
+    //   }
+    //   // 排除掉这些false情况，当前点是没问题的，可以继续递归考察
+    //   used[row][col] = true;  // used记录一下当前点被访问了
+    //   const canFindRest =
+    //     canFind(row + 1, col, m, n, i + 1, word, used, board) ||
+    //     canFind(row - 1, col, m, n, i + 1, word, used, board) ||
+    //     canFind(row, col + 1, m, n, i + 1, word, used, board) ||
+    //     canFind(row, col - 1, m, n, i + 1, word, used, board);
+
+    //   if (canFindRest) { // 基于当前点，可以为剩下的字符找到路径
+    //     return true;
+    //   }
+    //   used[row][col] = false; // 找不出，返回false，继续考察别的分支，并撤销当前点的访问状态。
+    //   return false;
+    // };
+    /**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+    var exist = function (board, word) {
+      const rows = board.length;
+      const cols = board[0].length;
+      const visited = Array.from(new Array(rows), () => new Array(cols));
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+          if (board[i][j] === word[0] && dfs(i, j, rows, cols, 0, word, visited, board)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
+    var dfs = function (i, j, rows, cols, bit, word, visited, board) {
+      if (bit > word.length - 1) {
+        return true;
+      }
+      if (i < 0 || i >= rows || j < 0 || j >= cols) {
+        return false;
+      }
+      if (visited[i][j] || board[i][j] !== word[bit]) {
+        return false;
+      }
+      visited[i][j] = true;
+      const isPass =
+        dfs(i - 1, j, rows, cols, bit + 1, word, visited, board) ||
+        dfs(i + 1, j, rows, cols, bit + 1, word, visited, board) ||
+        dfs(i, j + 1, rows, cols, bit + 1, word, visited, board) ||
+        dfs(i, j - 1, rows, cols, bit + 1, word, visited, board);
+      if (isPass) {
+        return true;
+      }
+      visited[i][j] = false;
+      return false;
+    }
+
+    var board = [
+      ['A', 'B', 'C', 'E'],
+      ['S', 'F', 'C', 'S'],
+      ['A', 'D', 'E', 'E']
+    ]
+
+    var word = "ABCB";
+    // 返回 true
+    // var word = "SEE";
+    // // 返回 true
+    // var word = "ABCB";
+    // // 返回 false
+
+    console.log(exist(board, word));
+
+
+  </script>
+</body>
+
+</html>

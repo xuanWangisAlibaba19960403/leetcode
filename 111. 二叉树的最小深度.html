@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val) {
+        *     this.val = val;
+        *     this.left = this.right = null;
+        * }
+        */
+        /**
+         * @param {TreeNode} root
+         * @return {number}
+         */
+        var minDepth = function (root) {
+            if (root === null) {
+                return 0;
+            }
+            if (root.left === null &&
+                root.right === null) {
+                return 1;
+            }
+            const left = minDepth(root.left);
+            const right = minDepth(root.right);
+            if (root.left === null ||
+                root.right === null) {
+                return left + right + 1;
+            }
+            return Math.min(left, right) + 1;
+        };
+        var minDepth = function (root) {
+            if (root === null) return 0;
+            const m1 = minDepth(root.left);
+            const m2 = minDepth(root.right);
+            //1.如果左孩子和右孩子有为空的情况，直接返回m1+m2+1
+            //2.如果都不为空，返回较小深度+1
+            return root.left === null || root.right === null ? m1 + m2 + 1 : Math.min(m1, m2) + 1;
+        }
+
+        console.log(minDepth(root));
+    </script>
+</body>
+
+</html>

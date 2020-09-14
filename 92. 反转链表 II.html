@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function ListNode(val) {
+      this.val = val;
+      this.next = null;
+    }
+  </script>
+  <script>
+    const thead = new ListNode();
+    let cur = thead;
+    for (let i = 1; i <= 5; i++) {
+      cur.next = new ListNode(i);
+      cur = cur.next;
+    }
+  </script>
+  <script>
+    /**
+    * Definition for singly-linked list.
+    * function ListNode(val) {
+    *     this.val = val;
+    *     this.next = null;
+    * }
+    */
+    /**
+     * @param {ListNode} head
+     * @param {number} m
+     * @param {number} n
+     * @return {ListNode}
+     */
+    // var reverseBetween = function (head, m, n) {
+    //   let thead = new ListNode(-1);
+    //   thead.next = head;
+    //   let tmp = thead;
+    //   // 找到第m-1个链表节点 保留引用
+    //   for (let i = 0; i < m - 1; i++) {
+    //     tmp = tmp.next;
+    //   }
+    //   let prev = null;
+    //   let cur = tmp.next;
+    //   for (let i = 0; i <= n - m; i++) {
+    //     let next = cur.next;
+    //     cur.next = prev;
+    //     prev = cur;
+    //     cur = next;
+    //   }
+    //   tmp.next.next = cur;
+    //   tmp.next = prev;
+    //   return thead.next;
+    // };
+
+    var reverseBetween = function (head, m, n) {
+      let thead = new ListNode(0);
+      thead.next = head;
+      let tmp = thead;
+      for (let i = 0; i < m - 1; i++) {
+        tmp = tmp.next;
+      }
+      console.log(tmp);
+      let start = tmp.next;
+      let tail = start.next;
+      console.log('start', start);
+      console.log('tail', tail);
+      for (let i = 0; i < n - m; i++) {
+        start.next = tail.next;
+        tail.next = tmp.next;
+        tmp.next = tail;
+        tail = start.next;
+      }
+      return thead.next;
+    };
+
+    reverseBetween(thead.next, 2, 4);
+  </script>
+</body>
+
+</html>

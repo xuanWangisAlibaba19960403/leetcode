@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var tree = {
+            val: 1,
+            left: {
+                val: 2,
+                left: {
+                    val: 3,
+                    left: {
+                        val: 4,
+                        left: null,
+                        right: null
+                    },
+                    right: {
+                        val: 4,
+                        left: null,
+                        right: null
+                    },
+                },
+                right: {
+                    val: 3,
+                    left: null,
+                    right: null
+                },
+            },
+            right: {
+                val: 2,
+                left: null,
+                right: null
+            }
+        }
+    </script>
+    <script>
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val) {
+        *     this.val = val;
+        *     this.left = this.right = null;
+        * }
+        */
+        /**
+         * @param {TreeNode} root
+         * @return {boolean}
+         */
+        var isBalanced = function (root) {
+            return height(root) >= 0;
+        };
+
+        var height = function (root) {
+            if (root === null) {
+                return 0;
+            }
+            const left = height(root.left);
+            const right = height(root.right);
+            if (left === -1 || right === -1 || Math.abs(left - right) > 1) {
+                return -1;
+            }
+            return Math.max(left, right) + 1;
+        };
+        console.log(isBalanced(tree));
+    </script>
+</body>
+
+</html>

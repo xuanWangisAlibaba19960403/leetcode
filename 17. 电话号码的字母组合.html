@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+        * @param {string} digits
+        * @return {string[]}
+        */
+        // var letterCombinations = function (digits) {
+        //     const dict = new Map();
+        //     dict.set('2', 'abc');
+        //     dict.set('3', 'def');
+        //     dict.set('4', 'ghi');
+        //     dict.set('5', 'jkl');
+        //     dict.set('6', 'mno');
+        //     dict.set('7', 'pqrs');
+        //     dict.set('8', 'tuv');
+        //     dict.set('9', 'wxyz');
+        //     const ret = [];
+        //     generate('', 0, digits, dict, ret);
+        //     console.log(ret);
+        // };
+
+        // var generate = function (curStr, i, digits, store, ret) { // curStr是当前字符串，i是扫描的指针
+        //     if (i >= digits.length) {    // 指针越界，递归的出口
+        //         ret.push(curStr);             // 将解推入res
+        //         return;                       // 结束当前递归分支，进入另一个递归分支
+        //     }
+        //     const letters = store.get(digits[i]); // 当前数字对应有哪些字母
+        //     for (const l of letters) {      // 不同的字母选择代表不同的递归分支
+        //         generate(curStr + l, i + 1, digits, store, ret);  // 生成新字符串，i指针右移，递归
+        //     }
+        // };
+
+        var letterCombinations = function (digits) {
+            const dict = new Map();
+            dict.set('2', 'abc');
+            dict.set('3', 'def');
+            dict.set('4', 'ghi');
+            dict.set('5', 'jkl');
+            dict.set('6', 'mno');
+            dict.set('7', 'pqrs');
+            dict.set('8', 'tuv');
+            dict.set('9', 'wxyz');
+            const queue = [''];
+            for (let digit of digits) {
+                const len = queue.length;
+                for (let i = 0; i < len; i++) {   // 逐个让当前层的节点出列
+                    const curStr = queue.shift();         // 出列
+                    const letters = dict.get(digit);
+                    for (const letter of letters) {
+                        queue.push(curStr + letter); // 生成新的字母串入列
+                    }
+                }
+            }
+            console.log(queue);
+        };
+
+        letterCombinations('23')
+    </script>
+</body>
+
+</html>

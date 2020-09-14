@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]
+        /**
+        * @param {number[]} nums
+        * @return {number[][]}
+        */
+        var findSubsequences = function (nums) {
+            const len = nums.length;
+            if (len <= 2) {
+                return nums;
+            }
+            for (let i = 0; i < len; i++) {
+                console.log(nums[i]);
+                for (let j = i + 1; j <= len; j++) {
+                    console.log(nums.slice(i, j));
+                }
+            }
+        };
+
+        var arr = [4, 6, 7, 7];
+
+        findSubsequences(arr);
+    </script>
+</body>
+
+</html>

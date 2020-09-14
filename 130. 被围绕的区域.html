@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * @param {character[][]} board
+         * @return {void} Do not return anything, modify board in-place instead.
+         */
+        var solve = function (board) {
+            let m = board.length;
+            if (m === 0) {
+                return;
+            }
+            let n = board[0].length;
+            let visited = {};
+            for (let i = 0; i < m; i++) {
+                for (let j = 0; j < n; j++) {
+                    // 从边缘O出发寻找其相连点都标示为不可替换
+                    if ((i === 0 || j === 0 || i === m - 1 || j === n - 1) && board[i][j] === 'O') {
+                        console.log(i, j);
+                        dfs(i, j, m, n, visited, board);
+                    }
+                }
+            }
+            // 规避边界条件去循环
+            for (let i = 1; i < m - 1; i++) {
+                for (let j = 1; j < n - 1; j++) {
+                    if (!visited[i + '-' + j] && board[i][j] == 'O') {
+                        board[i][j] = 'X';
+                    }
+                }
+            }
+        };
+
+        var dfs = function (i, j, maxRow, maxCol, visited, board) {
+            // 越界、标示过或者非相连O下return
+            if (i < 0 || j < 0 || i === maxRow || j === maxCol || board[i][j] !== 'O' || visited[i + '-' + j]) {
+                return;
+            }
+            visited[i + '-' + j] = true;
+            console.log(visited);
+            dfs(i - 1, j, maxRow, maxCol, visited, board);
+            dfs(i + 1, j, maxRow, maxCol, visited, board);
+            dfs(i, j - 1, maxRow, maxCol, visited, board);
+            dfs(i, j + 1, maxRow, maxCol, visited, board);
+        }
+        var board = [["O", "X", "X", "O", "X"], ["X", "O", "O", "X", "O"], ["X", "O", "X", "O", "X"], ["O", "X", "O", "O", "O"], ["X", "X", "O", "X", "O"]];
+        var board1 = [["O", "X", "X", "O", "X"], ["X", "O", "O", "X", "O"], ["X", "O", "X", "O", "X"], ["O", "X", "O", "O", "O"], ["X", "X", "O", "X", "O"]];
+        console.log('输入数据')
+        console.table(board);
+        solve(board1);
+
+        // var board = [["X", "X", "X", "X"], ["X", "O", "O", "X"], ["X", "X", "O", "X"], ["X", "O", "X", "X"]];
+        // var board1 = [["X", "X", "X", "X"], ["X", "O", "O", "X"], ["X", "X", "O", "X"], ["X", "O", "X", "X"]];
+        // console.log('输入数据')
+        // console.table(board);
+        // solve(board1);
+        // console.log('预期数据');
+        // console.table([["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]);
+    </script>
+</body>
+
+</html>

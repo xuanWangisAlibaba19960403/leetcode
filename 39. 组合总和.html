@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * @param {number[]} candidates
+    * @param {number} target
+    * @return {number[][]}
+    */
+    var combinationSum = function (candidates, target) {
+      console.log(candidates, target);
+      const len = candidates.length;
+      const ret = [];
+      if (len === 0) {
+        return ret;
+      }
+      dfs(0, len, target, [], ret, candidates);
+      console.log(ret);
+    };
+
+    var dfs = function (start, end, target, path, ret, store) {
+      if (target === 0) {
+        console.log(path);
+        ret.push([...path]);
+        return;
+      }
+      for (let i = start; i < end; i++) {
+        if (target - store[i] < 0) { // 剪枝
+          break;
+        }
+        path.push(store[i]);
+        dfs(i, end, target - store[i], path, ret, store);
+        path.pop();
+      }
+    }
+
+    // var combinationSum = function (candidates, target) {
+    //   const ret = [];
+    //   const len = candidates.length;
+    //   if (len < 0) {
+    //     return ret;
+    //   }
+    //   helper(0, len, target, [], ret, candidates);
+    //   console.log(ret);
+    // };
+
+    // var helper = function (start, end, target, path, ret, store) {
+    //   console.log(start);
+    //   // 1.终止条件
+    //   if (diff === 0) {
+    //     ret.push(path.slice());
+    //     return;
+    //   }
+    //   if (diff < 0) {
+    //     return;
+    //   }
+    //   // 2.处理当前
+    //   for (let i = start; i < len; i++) {
+    //     path.push(store[i]);
+    //     // 3.下一层
+    //     helper(i, end, target - store[i], path, ret, store);
+    //     // 4.处理当前数据
+    //     path.pop(); // 回溯让path为空数组
+    //   }
+    // }
+
+    var candidates = [2, 3, 5], target = 8;
+
+    // var combinationSum = function (candidates, target) {
+    //   let len = candidates.length;
+    //   const res = [];
+    //   if (len == 0) {
+    //     return res;
+    //   }
+    //   dfs(candidates, 0, len, target, [], res);
+    //   console.log(res);
+    //   return res;
+    // }
+
+    // /**
+    // * @param candidates 候选数组
+    // * @param begin      搜索起点
+    // * @param len        冗余变量，是 candidates 里的属性，可以不传
+    // * @param target     每减去一个元素，目标值变小
+    // * @param path       从根结点到叶子结点的路径，是一个栈
+    // * @param res        结果集列表
+    // */
+    // var dfs = function (candidates, begin, len, target, path, res) {
+    //   // target 为负数和 0 的时候不再产生新的孩子结点
+    //   if (target == 0) {
+    //     res.push(path.slice());
+    //     return;
+    //   }
+    //   if (target < 0) {
+    //     return;
+    //   }
+
+    //   // 重点理解这里从 begin 开始搜索的语意
+    //   for (let i = begin; i < len; i++) {
+    //     path.push(candidates[i]);
+
+    //     // 注意：由于每一个元素可以重复使用，下一轮搜索的起点依然是 i，这里非常容易弄错
+    //     dfs(candidates, i, len, target - candidates[i], path, res);
+
+    //     // 状态重置
+    //     path.pop();
+    //   }
+    // }
+
+    // function combinationSum(candidates, target) {
+    //   candidates.sort((a, b) => a - b);
+    //   var buffer = [];
+    //   var result = [];
+    //   search(0, target, buffer, result, candidates);
+    //   console.log(result);
+    //   return result;
+    // }
+
+
+    // function search(startIdx, target, buffer, result, store) {
+    //   if (target === 0) return result.push(buffer.slice());
+    //   if (target < 0) return;
+    //   if (startIdx === store.length) return;
+    //   buffer.push(store[startIdx]);
+    //   search(startIdx, target - store[startIdx], buffer, result, store);
+    //   buffer.pop();
+    //   search(startIdx + 1, target, buffer, result, store);
+    // }
+
+    combinationSum(candidates, target);
+
+  </script>
+</body>
+
+</html>
