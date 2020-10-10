@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var J = "aA",
+            S = "aAAbbbb";
+    </script>
+    <script>
+        /**
+        * @param {string} J
+        * @param {string} S
+        * @return {number}
+        */
+        var numJewelsInStones = function (J, S) {
+            let store = new Map();
+            for (let key of J) {
+                store.set(key, 0);
+            }
+            for (let s of S) {
+                if (store.has(s)) {
+                    store.set(s, store.get(s) + 1);
+                }
+            }
+            return [...store.values()].reduce((a, b) => a + b, 0);
+        };
+
+        numJewelsInStones(J, S);
+    </script>
+</body>
+
+</html>

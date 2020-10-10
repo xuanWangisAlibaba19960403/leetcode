@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * @param {number[]} nums
+    * @return {number[][]}
+    */
+    var permuteUnique = function (nums) {
+      const len = nums.length;
+      const ret = [];
+      const map = new Map();
+      if (len === 0) {
+        return ret;
+      }
+      const visited = new Array(len);
+      dfs(0, len, [], nums, visited, map, ret);
+      return ret;
+    };
+
+    var dfs = function (depth, len, path, nums, visited, map, ret) {
+      if (depth === len) {
+        const key = path.join(',');
+        if (map.has(key)) {
+          return;
+        }
+        map.set(key, true);
+        ret.push([...path]);
+        return;
+      }
+
+      for (let i = 0; i < len; i++) {
+        if (visited[i]) continue;
+
+        path.push(nums[i]);
+        visited[i] = true;
+
+        dfs(depth + 1, len, path, nums, visited, map, ret);
+
+        path.pop();
+        visited[i] = false;
+      }
+    };
+
+    permuteUnique([1, 1, 2])
+
+    // 输入: [1, 1, 2]
+    // 输出:
+    // [
+    //   [1, 1, 2],
+    //   [1, 2, 1],
+    //   [2, 1, 1]
+    // ]
+  </script>
+</body>
+
+</html>

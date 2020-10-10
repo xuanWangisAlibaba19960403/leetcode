@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var root = {
+      val: 5,
+      left: {
+        val: 2,
+        left: null,
+        right: null
+      },
+      right: {
+        val: 13,
+        left: null,
+        right: null
+      }
+    }
+  </script>
+  <script>
+    /**
+    * Definition for a binary tree node.
+    * function TreeNode(val) {
+    *     this.val = val;
+    *     this.left = this.right = null;
+    * }
+    */
+    /**
+     * @param {TreeNode} root
+     * @return {TreeNode}
+     */
+    var convertBST = function (root) {
+      if (root === null) {
+        return null;
+      }
+      dfs(root, 0);
+      console.log(root)
+      return root;
+    };
+
+    var dfs = function (root, sum) {
+      if (root === null) {
+        return;
+      }
+      if (root.right) {
+        dfs(root.right, sum);
+      }
+      sum += root.val;
+      console.log(sum);
+      root.val = sum;
+
+      if (root.left) {
+        dfs(root.left, sum);
+      }
+    }
+
+    convertBST(root);
+  </script>
+</body>
+
+</html>

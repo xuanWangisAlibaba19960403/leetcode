@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+        * @param {number[]} nums
+        * @return {boolean}
+        */
+        var PredictTheWinner = function (nums) {
+            let player1 = 0;
+            let player2 = 0;
+            let len = nums.length;
+            for (let i = 0; i < len; i++) {
+                if (i % 2 === 0) {
+                    player1 += nums[i];
+                } else {
+                    player2 += nums[i];
+                }
+            }
+            console.log(player1, player2)
+            return player1 >= player2;
+            console.log(nums);
+        };
+        var arr = [0];
+        PredictTheWinner([...arr]);
+    </script>
+</body>
+
+</html>

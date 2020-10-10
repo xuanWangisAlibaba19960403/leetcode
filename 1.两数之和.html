@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var nums = [2, 7, 11, 15],
+      target = 9;
+  </script>
+  <script>
+    /**
+    * @param {number[]} nums
+    * @param {number} target
+    * @return {number[]}
+    */
+    var twoSum = function (nums, target) {
+      console.log(nums, target);
+      const map = new Map();
+      for (let i = 0;  i < nums.length; i++) {
+        const v = target - nums[i];
+        if (map.has(v)) {
+          return [map.get(v), i];
+        } else {
+          map.set(nums[i], i);
+        }
+      }
+      return [];
+    };
+    console.log(twoSum(nums, target));
+  </script>
+</body>
+
+</html>

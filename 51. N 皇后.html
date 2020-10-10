@@ -13,25 +13,27 @@
     * @param {number} n
     * @return {string[][]}
     */
-    function solveNQueens(n) {
+    var solveNQueens = function (n) {
+      const ret = [];
+      if (n <= 0) {
+        return ret;
+      }
       const board = new Array(n);
       for (let i = 0; i < n; i++) { // 创建一个充满“点”的棋盘
         board[i] = new Array(n).fill('.');
       }
-      console.log(board);
-      const ans = [];
-      helper(0, n, ans, board);  // 搜索的开始按钮，从第0行开始
-      console.log(ans);
-      return ans;
+      dfs(0, n, board, ret)
+      console.log(ret);
+      return ret;
     };
 
-    function isValid(row, col, n, board) {
+    var isValid = function (row, col, n, board) {
       for (let i = 0; i < row; i++) {
         for (let j = 0; j < n; j++) {
           if (board[i][j] == 'Q' &&
-            j == col ||
-            i + j === row + col ||
-            i - j === row - col
+            (j === col ||
+              i + j === row + col ||
+              i - j === row - col)
           ) {
             return false;
           }
@@ -40,23 +42,28 @@
       return true;
     };
 
-    function helper(row, n, ans, board) {
-      if (row == n) { // 递归的出口
-        const stringsBoard = board.slice(); // 拷贝一份board
+    var dfs = function (row, n, board, ret) {
+      console.log(board);
+      if (row === n) {
+        const tmpBoard = [...board];
+        console.log(tmpBoard);
         for (let i = 0; i < n; i++) {
-          stringsBoard[i] = stringsBoard[i].join(''); // 将每一行拼成字符串
+          tmpBoard[i] = tmpBoard[i].join('');
         }
-        ans.push(stringsBoard); // 推入结果数组
+        ret.push(tmpBoard);
         return;
       }
-      for (let col = 0; col < n; col++) { // 枚举选择
-        if (isValid(row, col, n, board)) { // 提前去掉无效的选择
-          board[row][col] = "Q"; // 作出选择，放置皇后
-          helper(row + 1, n, ans, board);       // 继续选择，往下递归
-          board[row][col] = '.'; // 撤销当前选择
+      for (let col = 0; col < n; col++) {
+        // cur
+        if (isValid(row, col, n, board)) {
+          board[row][col] = 'Q';
+          // next
+          dfs(row + 1, n, board, ret);
+          // 回溯
+          board[row][col] = '.';
         }
       }
-    };
+    }
 
     solveNQueens(4);
   </script>

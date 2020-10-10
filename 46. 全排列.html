@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+    * @param {number[]} nums
+    * @return {number[][]}
+    */
+    var permute = function (nums) {
+      const len = nums.length;
+      const ret = [];
+      if (len === 0) {
+        return ret;
+      }
+      const used = new Array(len);
+      dfs(0, len, [], nums, used, ret);
+      return ret;
+    };
+
+    var dfs = function (depth, len, path, nums, used, ret) {
+      if (depth === len) {
+        ret.push([...path]);
+        return;
+      }
+      for (let i = 0; i < len; i++) {
+        if (used[i]) continue;
+        path.push(nums[i]);
+        used[i] = true;
+
+        dfs(depth + 1, len, path, nums, used, ret);
+
+        used[i] = false;
+        path.pop();
+      }
+    }
+
+
+    permute([1, 2, 3]);
+
+  </script>
+</body>
+
+</html>
