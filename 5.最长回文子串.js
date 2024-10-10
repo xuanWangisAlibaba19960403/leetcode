@@ -19,17 +19,17 @@ var longestPalindrome = function (s) {
   }
   let res = ''
   let dp = []
-  for (let i = length - 1; i >= 0; i--) {
+  for (let i = 0; i < length; i++) {
     dp[i] = []
     dp[i][i] = true
-    for (let j = i; j < length; j++) {
-      dp[i][j] = s[i] == s[j] && (j - i < 2 || dp[i + 1][j - 1]);
-      if (dp[i][j] && j - i + 1 > res.length) {
-        res = s.slice(i, j + 1)
+    for (let j = i; j >= 0; j--) {
+      // 字串dp[j + 1][i - 1]
+      dp[j][i] = s[i] === s[j] && (i - j < 2 || dp[j + 1][i - 1])
+      if (dp[j][i] && i - j + 1 > res.length) {
+        res = s.slice(j, i + 1)
       }
     }
   }
-
   return res
 };
 // @lc code=end
