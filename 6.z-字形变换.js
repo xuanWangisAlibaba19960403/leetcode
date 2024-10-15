@@ -10,43 +10,30 @@
  * @param {number} numRows
  * @return {string}
  */
-var convert = function (s, numRows) {
-  const dp = []
-  let length = s.length
-  const col = s.length / (numRows * 2 - 2) * 2
-  let start = 0
-  while (start < length) {
-    for (let i = 0; i < col; i++) {
-      for (let j = 0; j < numRows; j++) {
-        dp[j] = dp[j] || []
-        if (isFill(i, j, numRows)) {
-          dp[j][i] = s[start++]
-        }
-      }
+const convert = (s, numRows) => {
+  if (typeof s !== 'string' || typeof numRows !== 'number') {
+    return s
+  }
+  const n = s.length, r = numRows;
+  if (r < 2 || r >= n) {
+    return s
+  }
+  const dp = new Array(r).fill(0).map(() => [])
+  const t = r * 2 - 2
+  let x = 0
+  for (let i = 0; i < n; i++) {
+    dp[x].push(s[i])
+    // i % t 在每一轮的位置
+    if (i % t < r - 1) {
+      x++
+    } else {
+      x--
     }
   }
-  return dp.map((arr) => {
-    return arr.reduce((str, char) => {
-      if (char) {
-        str += char
-      }
-      return str
-    }, '')
+  return dp.map((strList) => {
+    return strList.join('')
   }).join('')
-};
-
-const isFill = (i, j, row) => {
-  // 对角线
-  if ((i + j) % (row - 1) === 0) {
-    return true
-  }
-  // 竖线
-  if (i % (row - 1) === 0) {
-    return true
-  }
-  return false
 }
 
-convert('PAYPALISHIRING', 3)
 // @lc code=end
 
