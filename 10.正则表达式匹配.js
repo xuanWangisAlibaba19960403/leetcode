@@ -14,7 +14,7 @@ var isMatch = function (s, p) {
   const m = s.length
   const n = p.length
   const dp = new Array(m).fill(0).map(() => new Array(n))
-  console.log(dp)
+  // i、j都为字符串空则匹配
   dp[0][0] = true
   for (let i = 0; i <= m; i++) {
     for (let j = 1; j <=n; j++ ) {
