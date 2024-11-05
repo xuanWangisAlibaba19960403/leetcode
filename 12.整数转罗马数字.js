@@ -9,27 +9,18 @@
  * @param {number} num
  * @return {string}
  */
-var intToRoman = function (num) {
-  let str = ''
-  while (num > 0) {
-    num = num % 10
-    translateRoman(num)
-  }
-  // const map = {
-  //   I: 1,
-  //   V: 5,
-  //   X: 10,
-  //   L: 50,
-  //   C: 100,
-  //   D: 500,
-  //   M: 1000,
-  // }
+var intToRoman = function(num) {
+  const thousands = ["", "M", "MM", "MMM"];
+  const hundreds = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"];
+  const tens     = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"];
+  const ones     = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
 
+  const roman = [];
+  roman.push(thousands[Math.floor(num / 1000)]);
+  roman.push(hundreds[Math.floor(num % 1000 / 100)]);
+  roman.push(tens[Math.floor(num % 100 / 10)]);
+  roman.push(ones[num % 10]);
+  return roman.join('');
 };
-
-
-const translateRoman = (num) => {
-
-}
 // @lc code=end
 
